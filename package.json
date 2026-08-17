@@ -1,0 +1,10 @@
+{
+  "name": "multi",
+  "private": true,
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "dev:saju": "npm run dev --workspace @multi/saju",
+    "build:saju": "npm run build --workspace @multi/saju",
+    "lint:saju": "npm run lint --workspace @multi/saju"
+  }
+}
