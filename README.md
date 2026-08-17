@@ -6,7 +6,18 @@
 
 | # | Project | Path | Status |
 |---|---|---|---|
-| 001 | 사주 오행 리포트 | `apps/saju` | 🚧 MVP |
+| 001 | 오늘의 명리 · 사주 AI 리포트 | `apps/saju` | ✅ MVP v2 |
+
+## Project 001 highlights
+
+- 양력 / 음력 / 윤달 입력
+- 출생시간 미상 지원
+- 사주 원국 · 일간 · 띠 · 오행 분석
+- 기본 성향 · 일 · 돈 · 관계 · 보완 루틴
+- Stripe 4,900원 1회 결제 구조
+- 결제 완료 서버 검증 + 24시간 프리미엄 토큰
+- OpenAI Responses API 기반 AI 상세해석
+- GitHub Actions TypeScript + Next.js build 검증
 
 ## Run
 
