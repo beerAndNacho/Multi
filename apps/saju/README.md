@@ -16,6 +16,7 @@ Next.js 기반 사주/오행 리포트 MVP입니다.
 - 결제 완료 서버 검증
 - 24시간 프리미엄 토큰
 - OpenAI Responses API 기반 AI 상세해석
+- GitHub Actions 타입체크 / 프로덕션 빌드 검증
 
 ## 로컬 실행
 
