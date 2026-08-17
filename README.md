@@ -8,6 +8,10 @@
 |---|---|---|---|
 | 001 | 오늘의 명리 · 사주와 궁합 | `apps/saju` | ✅ MVP v3 |
 
+## 100 Project Roadmap
+
+- [`docs/PROJECT-CATALOG-100.md`](docs/PROJECT-CATALOG-100.md) — 001~100 전체 후보, 권장 제작 순서, 수익모델, 운영난이도, AI 비용
+
 ## Project 001 highlights
 
 - 공통 `BirthProfile` 기반 사주/궁합 입력 구조
@@ -25,6 +29,7 @@
 ## Project 001 product plan
 
 - [`docs/PROJECT-001-SAJU-PLAN.md`](docs/PROJECT-001-SAJU-PLAN.md)
+- [`docs/PROJECT-001-SAJU-HANDOFF.md`](docs/PROJECT-001-SAJU-HANDOFF.md)
 - Live demo: `https://beerandnacho.github.io/saju/`
 
 ## Run
