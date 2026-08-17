@@ -1,18 +1,20 @@
 {
   "name": "@multi/saju",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
     "lunar-javascript": "^1.7.7",
     "next": "^15.5.0",
+    "openai": "^5.12.2",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "stripe": "^18.5.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
