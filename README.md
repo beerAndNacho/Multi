@@ -7,6 +7,7 @@
 | # | Project | Path | Status |
 |---|---|---|---|
 | 001 | 오늘의 명리 · 사주와 궁합 | `apps/saju` | ✅ MVP v3 |
+| 005 | 프리랜서 3.3% 계산기 | `apps/freelancer-33` | 🧪 MVP |
 
 ## 100 Project Roadmap
 
@@ -32,11 +33,27 @@
 - [`docs/PROJECT-001-SAJU-HANDOFF.md`](docs/PROJECT-001-SAJU-HANDOFF.md)
 - Live demo: `https://beerandnacho.github.io/saju/`
 
+## Project 005 highlights
+
+- 프리랜서 사업소득 3.3% 세전→세후 계산
+- 세후→세전 역산
+- 월 건수 기반 월·연간 수입 예상
+- 결과 복사 / Web Share
+- SEO 설명 콘텐츠 + FAQ + 구조화 데이터
+- AdSense 슬롯 준비
+- 서버/API 비용 없는 정적 export
+
+## Project 005 product plan
+
+- [`docs/PROJECT-005-FREELANCER-33-PLAN.md`](docs/PROJECT-005-FREELANCER-33-PLAN.md)
+
 ## Run
 
 ```bash
 npm install
 npm run dev:saju
+# or
+npm run dev:freelancer-33
 ```
 
 각 프로젝트는 `apps/<project-name>` 아래에 독립적인 앱으로 추가합니다.
