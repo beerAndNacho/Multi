@@ -1,0 +1,35 @@
+name: personalized-labs-ci
+
+on:
+  push:
+    branches: [main, labs-03-25-personalized]
+    paths:
+      - 'apps/personalized-labs/**'
+      - '.github/workflows/personalized-labs-ci.yml'
+  pull_request:
+    paths:
+      - 'apps/personalized-labs/**'
+      - '.github/workflows/personalized-labs-ci.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate JavaScript syntax
+        run: |
+          node --check apps/personalized-labs/labs-a.js
+          node --check apps/personalized-labs/labs-b.js
+          node --check apps/personalized-labs/core.js
+      - name: Validate required files
+        run: |
+          test -s apps/personalized-labs/index.html
+          test -s apps/personalized-labs/core.css
+          test -s apps/personalized-labs/core.js
+          test -s apps/personalized-labs/labs-a.js
+          test -s apps/personalized-labs/labs-b.js
