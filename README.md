@@ -9,6 +9,7 @@
 | 001 | 오늘의 명리 · 사주와 궁합 | `apps/saju` | ✅ MVP v3 |
 | 005 | 프리랜서 3.3% 계산기 | `apps/freelancer-33` | 🧪 MVP |
 | LAB-01 | 우리 둘 데이트 코스 | `apps/date-course` | 🧪 Personalized MVP |
+| LAB-02 | 퇴근하고 뭐 하지? | `apps/after-work` | 🧪 Personalized MVP |
 
 ## 100 Project Roadmap
 
@@ -24,17 +25,16 @@
 - localStorage 기반 이전 설정 복원
 - GA4 + Microsoft Clarity 환경변수 기반 조건부 계측
 - 서버/API 비용 없는 정적 export
-- 특정 매장 실시간 데이터 없이 지역·활동 조합으로 MVP 검증
 
-## LAB-01 analytics events
+## LAB-02 highlights
 
-- `date_wizard_start`
-- `date_question_complete`
-- `date_course_generated`
-- `date_course_regenerate`
-- `date_course_save`
-- `share`
-- `date_course_restart`
+- 체력 / 남은 시간 / 예산 / 동행 / 공간 / 기분을 한 화면에서 즉시 조정
+- 조건을 바꾸면 퇴근 후 추천과 시간대별 실행 플랜이 즉시 변경
+- 추천 다시 받기 / 대안 선택 / 저장 / 공유
+- localStorage 기반 설정 복원
+- GA4 + Microsoft Clarity 조건부 계측 자리 포함
+- `taste-skill`의 anti-slop 원칙을 참고한 저채도 편집형 레이아웃
+- 서버/API 비용 없는 단일 정적 HTML MVP
 
 ## Run
 
@@ -45,4 +45,6 @@ npm run dev:freelancer-33
 npm run dev:date-course
 ```
 
-각 프로젝트는 `apps/<project-name>` 아래에 독립적인 앱으로 추가합니다.
+`LAB-02`는 `apps/after-work/index.html`을 직접 열거나 정적 호스팅에 배포하면 됩니다.
+
+각 프로젝트는 `apps/<project-name>` 아래에 독립적으로 추가합니다.
