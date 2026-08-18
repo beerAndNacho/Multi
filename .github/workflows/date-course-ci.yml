@@ -1,0 +1,31 @@
+name: date-course-ci
+
+on:
+  push:
+    branches: [main, project-date-course-personalized]
+    paths:
+      - 'apps/date-course/**'
+      - 'package.json'
+      - '.github/workflows/date-course-ci.yml'
+  pull_request:
+    paths:
+      - 'apps/date-course/**'
+      - 'package.json'
+      - '.github/workflows/date-course-ci.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm install
+      - name: Type check
+        run: npm run lint:date-course
+      - name: Production build
+        run: npm run build:date-course

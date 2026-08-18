@@ -8,6 +8,9 @@
     "lint:saju": "npm run lint --workspace @multi/saju",
     "dev:freelancer-33": "npm run dev --workspace @multi/freelancer-33",
     "build:freelancer-33": "npm run build --workspace @multi/freelancer-33",
-    "lint:freelancer-33": "npm run lint --workspace @multi/freelancer-33"
+    "lint:freelancer-33": "npm run lint --workspace @multi/freelancer-33",
+    "dev:date-course": "npm run dev --workspace @multi/date-course",
+    "build:date-course": "npm run build --workspace @multi/date-course",
+    "lint:date-course": "npm run lint --workspace @multi/date-course"
   }
 }
