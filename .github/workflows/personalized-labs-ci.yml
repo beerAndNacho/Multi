@@ -5,10 +5,12 @@ on:
     branches: [main]
     paths:
       - 'apps/personalized-labs/**'
+      - 'apps/lab-hub/**'
       - '.github/workflows/personalized-labs-ci.yml'
   pull_request:
     paths:
       - 'apps/personalized-labs/**'
+      - 'apps/lab-hub/**'
       - '.github/workflows/personalized-labs-ci.yml'
 
 jobs:
@@ -25,20 +27,35 @@ jobs:
         run: |
           node --check apps/personalized-labs/labs-a.js
           node --check apps/personalized-labs/labs-b.js
+          node --check apps/personalized-labs/labs-c.js
           node --check apps/personalized-labs/layout-base.js
           node --check apps/personalized-labs/layout-bodies-a.js
           node --check apps/personalized-labs/layout-bodies-b.js
+          node --check apps/personalized-labs/layout-bodies-c.js
           node --check apps/personalized-labs/layout-css-a.js
           node --check apps/personalized-labs/layout-css-b.js
+          node --check apps/personalized-labs/layout-css-c.js
           node --check apps/personalized-labs/core.js
+          python - <<'PY'
+          import re
+          from pathlib import Path
+          html = Path('apps/lab-hub/index.html').read_text(encoding='utf-8')
+          scripts = re.findall(r'<script>([\s\S]*?)</script>', html)
+          Path('/tmp/lab-hub.js').write_text('\n'.join(scripts), encoding='utf-8')
+          PY
+          node --check /tmp/lab-hub.js
       - name: Validate required files
         run: |
+          test -s apps/lab-hub/index.html
           test -s apps/personalized-labs/index.html
           test -s apps/personalized-labs/core.js
           test -s apps/personalized-labs/labs-a.js
           test -s apps/personalized-labs/labs-b.js
+          test -s apps/personalized-labs/labs-c.js
           test -s apps/personalized-labs/layout-base.js
           test -s apps/personalized-labs/layout-bodies-a.js
           test -s apps/personalized-labs/layout-bodies-b.js
+          test -s apps/personalized-labs/layout-bodies-c.js
           test -s apps/personalized-labs/layout-css-a.js
           test -s apps/personalized-labs/layout-css-b.js
+          test -s apps/personalized-labs/layout-css-c.js
