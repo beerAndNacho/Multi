@@ -1,0 +1,35 @@
+name: freelancer-33-ci
+
+on:
+  push:
+    branches: [main, project-005-freelancer-33]
+    paths:
+      - 'apps/freelancer-33/**'
+      - 'package.json'
+      - '.github/workflows/freelancer-33-ci.yml'
+  pull_request:
+    paths:
+      - 'apps/freelancer-33/**'
+      - 'package.json'
+      - '.github/workflows/freelancer-33-ci.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install
+        run: npm install
+
+      - name: Type check
+        run: npm run lint:freelancer-33
+
+      - name: Production build
+        run: npm run build:freelancer-33
