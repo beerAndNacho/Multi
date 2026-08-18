@@ -2,6 +2,15 @@
 
 100개의 실용적인 미니 웹 프로젝트와 수익화 실험 앱을 한 저장소에서 관리하는 모노레포입니다.
 
+## 오늘결정 허브
+
+`apps/lab-hub`는 LAB-01~26을 검색·카테고리·상황별 추천·최근 사용으로 탐색하는 통합 허브입니다.
+
+- 공개 허브: `https://beerandnacho.github.io/labs/`
+- 기존 `?lab=<slug>` 주소는 독립 경로로 이동
+- LAB-03~26 독립 경로: `/labs/<slug>/`
+- 최근 사용 기록과 LAB별 설정은 `localStorage`에만 저장
+
 ## Personalized Labs
 
 | LAB | 서비스 | 소스 |
@@ -31,25 +40,24 @@
 | 23 | 이직할까 말까? | `apps/personalized-labs` |
 | 24 | 이번 달 뭐 하나 끊을까? | `apps/personalized-labs` |
 | 25 | 내 취향에 맞는 동네 찾기 | `apps/personalized-labs` |
+| 26 | 오늘 이거 사도 될까? | `apps/personalized-labs` |
 
-LAB-03~25는 `apps/personalized-labs/`에서 관리하며 URL의 `?lab=<slug>`로 서비스를 선택합니다.
-
-## LAB-03~25 runtime
+## LAB-03~26 runtime
 
 - `index.html` — 런타임 진입점
-- `labs-a.js`, `labs-b.js` — 서비스별 질문·결과 데이터
-- `layout-bodies-a.js`, `layout-bodies-b.js` — LAB별 독립 HTML 구조
-- `layout-css-a.js`, `layout-css-b.js` — 주제별 전용 UI 스타일
+- `labs-a.js`, `labs-b.js`, `labs-c.js` — 서비스별 질문·결과 데이터
+- `layout-bodies-a.js`, `layout-bodies-b.js`, `layout-bodies-c.js` — LAB별 독립 HTML 구조
+- `layout-css-a.js`, `layout-css-b.js`, `layout-css-c.js` — 주제별 전용 UI 스타일
 - `layout-base.js` — 공통 접근성·버튼·타이포 최소 규칙
-- `core.js` — 개인화 점수, 렌더링, 저장·공유, GA4·Clarity 훅
+- `core.js` — 개인화 점수, clean URL, 최근 사용, 저장·공유, GA4·Clarity 훅
 
 ## Design / Analytics
 
 - `taste-skill` anti-slop 원칙을 참고해 AI-purple 기본값, 반복 카드, 가짜 정밀 점수, 과한 장식 문구를 피합니다.
-- LAB-03~25는 동일 셸의 색상 교체가 아니라 서비스별 HTML 구조와 스타일을 사용합니다.
+- LAB별로 훈련일지·카탈로그·패션 레일·전표·노트·메신저·영수증 등 서로 다른 구조를 사용합니다.
 - 선택 즉시 개인화, 추천 이유, 실행 3단계, 대안 결과, 저장·공유를 제공합니다.
-- GA4와 Microsoft Clarity ID 연결 자리가 포함되어 있습니다.
-- 선택값은 `localStorage`에 저장하며 서버나 유료 API 없이 동작합니다.
+- 허브와 개별 LAB 모두 GA4와 Microsoft Clarity ID 연결 자리가 포함되어 있습니다.
+- 서버나 유료 API 없이 정적 파일로 동작합니다.
 
 ## Existing projects
 
@@ -60,4 +68,4 @@ LAB-03~25는 `apps/personalized-labs/`에서 관리하며 URL의 `?lab=<slug>`�
 
 ## Validation
 
-GitHub Actions의 `personalized-labs-ci`가 LAB 데이터·레이아웃·런타임 JavaScript 문법과 필수 파일 존재 여부를 검사합니다.
+GitHub Actions의 `personalized-labs-ci`가 허브의 인라인 JavaScript와 LAB 데이터·레이아웃·런타임 문법, 필수 파일 존재 여부를 검사합니다.
