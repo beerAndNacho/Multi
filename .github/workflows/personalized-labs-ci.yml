@@ -2,7 +2,7 @@ name: personalized-labs-ci
 
 on:
   push:
-    branches: [main, labs-unique-ui-redesign]
+    branches: [main]
     paths:
       - 'apps/personalized-labs/**'
       - '.github/workflows/personalized-labs-ci.yml'
