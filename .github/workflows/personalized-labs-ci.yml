@@ -2,15 +2,17 @@ name: personalized-labs-ci
 
 on:
   push:
-    branches: [main]
+    branches: [main, labs-27-100]
     paths:
       - 'apps/personalized-labs/**'
       - 'apps/lab-hub/**'
+      - 'docs/PERSONALIZED-LABS-100.md'
       - '.github/workflows/personalized-labs-ci.yml'
   pull_request:
     paths:
       - 'apps/personalized-labs/**'
       - 'apps/lab-hub/**'
+      - 'docs/PERSONALIZED-LABS-100.md'
       - '.github/workflows/personalized-labs-ci.yml'
 
 jobs:
@@ -25,37 +27,59 @@ jobs:
           node-version: 20
       - name: Validate JavaScript syntax
         run: |
-          node --check apps/personalized-labs/labs-a.js
-          node --check apps/personalized-labs/labs-b.js
-          node --check apps/personalized-labs/labs-c.js
-          node --check apps/personalized-labs/layout-base.js
-          node --check apps/personalized-labs/layout-bodies-a.js
-          node --check apps/personalized-labs/layout-bodies-b.js
-          node --check apps/personalized-labs/layout-bodies-c.js
-          node --check apps/personalized-labs/layout-css-a.js
-          node --check apps/personalized-labs/layout-css-b.js
-          node --check apps/personalized-labs/layout-css-c.js
-          node --check apps/personalized-labs/core.js
-          python - <<'PY'
-          import re
-          from pathlib import Path
-          html = Path('apps/lab-hub/index.html').read_text(encoding='utf-8')
-          scripts = re.findall(r'<script>([\s\S]*?)</script>', html)
-          Path('/tmp/lab-hub.js').write_text('\n'.join(scripts), encoding='utf-8')
-          PY
-          node --check /tmp/lab-hub.js
+          for file in \
+            apps/personalized-labs/labs-index.js \
+            apps/personalized-labs/labs-a.js apps/personalized-labs/labs-b.js apps/personalized-labs/labs-c.js \
+            apps/personalized-labs/labs-d.js apps/personalized-labs/labs-e.js apps/personalized-labs/labs-f.js \
+            apps/personalized-labs/layout-base.js \
+            apps/personalized-labs/layout-bodies-a.js apps/personalized-labs/layout-bodies-b.js apps/personalized-labs/layout-bodies-c.js \
+            apps/personalized-labs/layout-css-a.js apps/personalized-labs/layout-css-b.js apps/personalized-labs/layout-css-c.js \
+            apps/personalized-labs/labs-expand-data.js apps/personalized-labs/labs-expand-layouts.js apps/personalized-labs/labs-expand-styles.js \
+            apps/personalized-labs/core.js \
+            apps/lab-hub/labs-index.js apps/lab-hub/hub.js
+          do
+            node --check "$file"
+          done
+      - name: Validate LAB registries
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          const files=[
+            'apps/personalized-labs/labs-index.js',
+            'apps/personalized-labs/labs-a.js','apps/personalized-labs/labs-b.js','apps/personalized-labs/labs-c.js',
+            'apps/personalized-labs/labs-d.js','apps/personalized-labs/labs-e.js','apps/personalized-labs/labs-f.js',
+            'apps/personalized-labs/layout-bodies-a.js','apps/personalized-labs/layout-bodies-b.js','apps/personalized-labs/layout-bodies-c.js',
+            'apps/personalized-labs/layout-css-a.js','apps/personalized-labs/layout-css-b.js','apps/personalized-labs/layout-css-c.js',
+            'apps/personalized-labs/labs-expand-data.js','apps/personalized-labs/labs-expand-layouts.js','apps/personalized-labs/labs-expand-styles.js'
+          ];
+          const ctx={window:{}};vm.createContext(ctx);
+          for(const file of files)vm.runInContext(fs.readFileSync(file,'utf8'),ctx,{filename:file});
+          const labs=[...(ctx.window.LABS_A||[]),...(ctx.window.LABS_B||[]),...(ctx.window.LABS_C||[]),...(ctx.window.LABS_D||[]),...(ctx.window.LABS_E||[]),...(ctx.window.LABS_F||[])];
+          if((ctx.window.LAB_INDEX||[]).length!==100)throw new Error('LAB_INDEX must contain 100 tools');
+          if(labs.length!==98)throw new Error(`Expected LAB-03~100 = 98, got ${labs.length}`);
+          const nums=new Set(),slugs=new Set();
+          for(const lab of labs){
+            const [num,slug,,,,,,,controls,results]=lab;
+            if(nums.has(num)||slugs.has(slug))throw new Error(`Duplicate LAB ${num}/${slug}`);
+            nums.add(num);slugs.add(slug);
+            if(!ctx.window.LAB_LAYOUTS?.[slug])throw new Error(`Missing layout ${num} ${slug}`);
+            const kind=ctx.window.LAB_KINDS?.[slug];
+            if(!kind||!ctx.window.LAB_CSS?.[kind])throw new Error(`Missing CSS ${num} ${slug}`);
+            if(!Array.isArray(controls)||controls.length<4)throw new Error(`Incomplete controls ${num}`);
+            if(!Array.isArray(results)||results.length<4)throw new Error(`Incomplete results ${num}`);
+          }
+          for(let n=3;n<=100;n++)if(!nums.has(n))throw new Error(`Missing LAB-${n}`);
+          console.log(`validated ${labs.length} runtime LABs and ${ctx.window.LAB_INDEX.length} hub entries`);
+          NODE
       - name: Validate required files
         run: |
           test -s apps/lab-hub/index.html
+          test -s apps/lab-hub/hub.css
+          test -s apps/lab-hub/hub.js
+          test -s apps/lab-hub/labs-index.js
           test -s apps/personalized-labs/index.html
           test -s apps/personalized-labs/core.js
-          test -s apps/personalized-labs/labs-a.js
-          test -s apps/personalized-labs/labs-b.js
-          test -s apps/personalized-labs/labs-c.js
-          test -s apps/personalized-labs/layout-base.js
-          test -s apps/personalized-labs/layout-bodies-a.js
-          test -s apps/personalized-labs/layout-bodies-b.js
-          test -s apps/personalized-labs/layout-bodies-c.js
-          test -s apps/personalized-labs/layout-css-a.js
-          test -s apps/personalized-labs/layout-css-b.js
-          test -s apps/personalized-labs/layout-css-c.js
+          test -s apps/personalized-labs/labs-expand-data.js
+          test -s apps/personalized-labs/labs-expand-layouts.js
+          test -s apps/personalized-labs/labs-expand-styles.js
+          test -s docs/PERSONALIZED-LABS-100.md
