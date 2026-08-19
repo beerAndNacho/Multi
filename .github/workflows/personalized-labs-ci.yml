@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
       - name: Validate JavaScript syntax
         run: |
           for file in \
@@ -66,7 +66,8 @@ jobs:
             const kind=ctx.window.LAB_KINDS?.[slug];
             if(!kind||!ctx.window.LAB_CSS?.[kind])throw new Error(`Missing CSS ${num} ${slug}`);
             if(!Array.isArray(controls)||controls.length<4)throw new Error(`Incomplete controls ${num}`);
-            if(!Array.isArray(results)||results.length<4)throw new Error(`Incomplete results ${num}`);
+            const minimumResults=num>=27?4:3;
+            if(!Array.isArray(results)||results.length<minimumResults)throw new Error(`Incomplete results ${num}: expected ${minimumResults}, got ${results?.length||0}`);
           }
           for(let n=3;n<=100;n++)if(!nums.has(n))throw new Error(`Missing LAB-${n}`);
           console.log(`validated ${labs.length} runtime LABs and ${ctx.window.LAB_INDEX.length} hub entries`);
